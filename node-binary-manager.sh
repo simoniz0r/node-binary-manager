@@ -89,7 +89,7 @@ nbm_update() {
 # function to set a given version as default node version using symlinks
 nbm_default() {
     if [[ "$EUID" -ne 0 ]]; then
-        nbm_error "This operation requires elevated permissions" "4"
+        nbm_error "This operation requires elevated permissions" "3"
     fi
     if [[ -z "$1" ]]; then
         nbm_error "No version input given" "4"
@@ -98,7 +98,7 @@ nbm_default() {
     if [[ ! -d "/opt/node-binary-manager/$1" ]]; then
         nbm_error "nodejs version '$1' not found in '/opt/node-binary-manager'" "4"
     fi
-    mkdir -p /usr/local/bin /usr/local/include /usr/local/lib /usr/local/share || \
+    mkdir -p /usr/local/bin /usr/local/include /usr/local/lib /usr/local/share/doc/node /usr/local/share/man/man1 /usr/local/share/systemtap/tapset || \
     nbm_error "Failed to create directories in '/usr/local'" "4"
     # test creating symlink for node
     ln -sf /opt/node-binary-manager/"$1"/bin/node /usr/local/bin/node || \
@@ -119,10 +119,10 @@ nbm_default() {
         ln -sf "$lfile" /usr/local/lib/"$file_name"
     done
     # create symlinks for all files in share dir
-    for lfile in /opt/node-binary-manager/"$1"/share/*; do
-        file_name="$(echo "$lfile" | rev | cut -f1 -d'/' | rev)"
-        ln -sf "$lfile" /usr/local/share/"$file_name"
-    done
+    ln -sf /opt/node-binary-manager/"$1"/share/doc/node/gdbinit /usr/local/share/doc/node/gdbinit
+    ln -sf /opt/node-binary-manager/"$1"/share/doc/node/lldb_commands.py /usr/local/share/doc/node/lldb_commands.py
+    ln -sf /opt/node-binary-manager/"$1"/share/man/man1/node.1 /usr/local/share/man/man1/node.1
+    ln -sf /opt/node-binary-manager/"$1"/share/systemtap/tapset/node.stp /usr/local/share/systemtap/tapset/node.stp
     echo "nodejs version '$1' set as default version"
 }
 
