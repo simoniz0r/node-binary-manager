@@ -142,7 +142,7 @@ nbm_remove() {
         nbm_error "Cannot remove '$1'; '$1' is set as the current default" "5"
     fi
     rm -r /opt/node-binary-manager/"$1" || nbm_error "Failed to remove '/opt/node-binary-manager/$1'" "5"
-    echo "Removed nodejs version '$1' from '/opt/local/bin/node'"
+    echo "Removed nodejs version '$1' from '/opt/node-binary-manager'"
 }
 
 # function to list installed and available versions
