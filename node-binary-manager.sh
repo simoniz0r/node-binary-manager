@@ -88,6 +88,9 @@ nbm_update() {
 
 # function to set a given version as default node version using symlinks
 nbm_default() {
+    if [[ "$EUID" -ne 0 ]]; then
+        nbm_error "This operation requires elevated permissions" "4"
+    fi
     if [[ -z "$1" ]]; then
         nbm_error "No version input given" "4"
     fi
