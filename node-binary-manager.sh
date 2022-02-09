@@ -127,13 +127,30 @@ nbm_default() {
     echo "nodejs version '$1' set as default version"
 }
 
+# function to list installed and available versions
+nbm_list() {
+    if [[ -d "/opt/node-binary-manager" ]]; then
+        echo "Installed versions:"
+        ls /opt/node-binary-manager
+    fi
+    if [[ "$1" == "all" ]]; then
+        echo "All versions available from 'https://nodejs.org':"
+        curl -sL 'https://nodejs.org/dist' | grep '<a href' | cut -f2 -d'"' | grep '^v\|^latest' | tr -d '/'
+    else
+        echo "Versions available from 'https://nodejs.org':"
+        curl -sL 'https://nodejs.org/dist' | grep '<a href' | cut -f2 -d'"' | grep '^latest' | tr -d '/'
+        echo -e "\nUse 'list all' to see all available versions"
+    fi
+}
+
 # help function
 nbm_help() {
     echo "node-binary-manager version 0.0.1"
-    echo -e "Usage:\t<install|in|update|up|default|def> <version>"
+    echo -e "Usage:\t<install|in|update|up|default|def|list|ls> <version>"
     echo -e "  install|in:\tInstall a given nodejs version to /opt/node-binary-manager"
     echo -e "  update|up:\tUpdate an already installed nodejs version"
     echo -e "  default|def:\tSet a given nodejs version as default by creating symlinks to /usr/local"
+    echo -e "  list|ls:\tList installed and available nodejs versions"
 }
 
 # check arguments
@@ -141,5 +158,6 @@ case "$1" in
     install|in) nbm_install "$2";;
     update|up) nbm_update "$2";;
     default|def) nbm_default "$2";;
+    list|ls) nbm_list "$2";;
     *) nbm_help;;
 esac
