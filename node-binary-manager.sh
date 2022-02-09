@@ -127,6 +127,24 @@ nbm_default() {
     echo "nodejs version '$1' set as default version"
 }
 
+# function to remove installed versions
+nbm_remove() {
+    if [[ "$EUID" -ne 0 ]]; then
+        nbm_error "This operation requires elevated permissions" "5"
+    fi
+    if [[ -z "$1" ]]; then
+        nbm_error "No version input given" "5"
+    fi
+    if [[ ! -d "/opt/node-binary-manager/$1" ]]; then
+        nbm_error "nodejs version '$1' not found in '/opt/node-binary-manager'" "5"
+    fi
+    if [[ -f "/usr/local/bin/node" && "$(readlink -f /usr/local/bin/node | cut -f4 -d'/')" == "$1" ]]; then
+        nbm_error "Cannot remove '$1'; '$1' is set as the current default" "5"
+    fi
+    rm -r /opt/node-binary-manager/"$1" || nbm_error "Failed to remove '/opt/node-binary-manager/$1'" "5"
+    echo "Removed nodejs version '$1' from '/opt/local/bin/node'"
+}
+
 # function to list installed and available versions
 nbm_list() {
     if [[ -d "/opt/node-binary-manager" ]]; then
@@ -146,10 +164,11 @@ nbm_list() {
 # help function
 nbm_help() {
     echo "node-binary-manager version 0.0.1"
-    echo -e "Usage:\t<install|in|update|up|default|def|list|ls> <version>"
+    echo -e "Usage:\t<install|in|update|up|default|def|remove|rm|list|ls> <version>"
     echo -e "  install|in:\tInstall a given nodejs version to /opt/node-binary-manager"
     echo -e "  update|up:\tUpdate an already installed nodejs version"
     echo -e "  default|def:\tSet a given nodejs version as default by creating symlinks to /usr/local"
+    echo -e "  remove|rm:\tRemove an installed nodejs version from /opt/node-binary-manager"
     echo -e "  list|ls:\tList installed and available nodejs versions"
 }
 
@@ -158,6 +177,7 @@ case "$1" in
     install|in) nbm_install "$2";;
     update|up) nbm_update "$2";;
     default|def) nbm_default "$2";;
+    remove|rm) nbm_remove "$2";;
     list|ls) nbm_list "$2";;
     *) nbm_help;;
 esac
