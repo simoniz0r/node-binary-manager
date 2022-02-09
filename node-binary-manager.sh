@@ -158,10 +158,10 @@ nbm_list() {
     fi
     if [[ "$1" == "all" ]]; then
         echo "All versions available from 'https://nodejs.org':"
-        curl -sL 'https://nodejs.org/dist' | grep '<a href' | cut -f2 -d'"' | grep '^v\|^latest' | tr -d '/'
+        curl -sL 'https://nodejs.org/dist' | grep '<a href' | cut -f2 -d'"' | grep '^v\|^latest' | tr -d '/' | sort -V
     else
         echo "Versions available from 'https://nodejs.org':"
-        curl -sL 'https://nodejs.org/dist' | grep '<a href' | cut -f2 -d'"' | grep '^latest' | tr -d '/'
+        curl -sL 'https://nodejs.org/dist' | grep '<a href' | cut -f2 -d'"' | grep '^latest' | tr -d '/' | sort -V
         echo -e "\nUse 'list all' to see all available versions"
     fi
 }
