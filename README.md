@@ -2,6 +2,7 @@
 A crude and relatively untested script for installing and managing nodejs binary installs from https://nodejs.org
 
 ```
+syretia@localhost:~> node-binary-manager
 node-binary-manager version 0.0.1
 Usage:  <install|in|update|up|default|def|remove|rm|list|ls> <version>
   install|in:   Install a given nodejs version to /opt/node-binary-manager
@@ -9,9 +10,11 @@ Usage:  <install|in|update|up|default|def|remove|rm|list|ls> <version>
   default|def:  Set a given nodejs version as default by creating symlinks to /usr/local
   remove|rm:    Remove an installed nodejs version from /opt/node-binary-manager
   list|ls:      List installed and available nodejs versions
-```
 
-```
+x86_64 Linux binaries are downloaded by default.
+To download binaries for another platform, set the 'NSB_PLATFORM' environment variable.
+Examples: 'export NSB_PLATFORM="linux-arm64"', 'export NSB_PLATFORM="darwin-x64"'
+
 syretia@localhost:~> node-binary-manager list
 Versions available from 'https://nodejs.org':
 latest
