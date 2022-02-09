@@ -45,6 +45,7 @@ nbm_install() {
     fi
     mkdir -p /opt/node-binary-manager || nbm_error "Failed to create directory '/opt/node-binary-manager'" "2"
     tar -xf /tmp/"$file" -C /opt/node-binary-manager || nbm_error "Failed to extract '/tmp/$file'" "2"
+    rm -f /tmp/"$file"
     mv /opt/node-binary-manager/"$version" /opt/node-binary-manager/"$1"
     echo "$version" > /opt/node-binary-manager/"$1"/version.txt
     echo "Installed '$1' to '/opt/node-binary-manager/$1'"
