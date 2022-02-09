@@ -1,4 +1,9 @@
 #!/bin/bash
+# Name: node-binary-manager
+# Author: Syretia
+# License: MIT
+# Description: Installs and manages nodejs binaries from https://nodejs.org/dist
+# Dependencies: curl
 
 # set default platform if not set
 NBM_PLATFORM="${NBM_PLATFORM:-linux-x64}"
