@@ -131,7 +131,7 @@ nbm_default() {
 nbm_list() {
     if [[ -d "/opt/node-binary-manager" ]]; then
         echo "Installed versions:"
-        ls /opt/node-binary-manager
+        ls -Cw1 /opt/node-binary-manager
     fi
     if [[ "$1" == "all" ]]; then
         echo "All versions available from 'https://nodejs.org':"
