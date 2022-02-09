@@ -175,6 +175,9 @@ nbm_help() {
     echo -e "  default|def:\tSet a given nodejs version as default by creating symlinks to /usr/local"
     echo -e "  remove|rm:\tRemove an installed nodejs version from /opt/node-binary-manager"
     echo -e "  list|ls:\tList installed and available nodejs versions"
+    echo -e "\nx86_64 Linux binaries are downloaded by default."
+    echo "To download binaries for another platform, set the 'NSB_PLATFORM' environment variable."
+    echo "Examples: 'export NSB_PLATFORM=\"linux-arm64\"', 'export NSB_PLATFORM=\"darwin-x64\"'"
 }
 
 # check arguments
