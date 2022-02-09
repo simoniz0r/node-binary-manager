@@ -23,7 +23,7 @@ nbm_error(){
 # function to get info for given nodejs version
 nbm_getversion() {
     # get sha256 sum and file info
-    export shafile="$(curl -sL "https://nodejs.org/dist/$1/SHASUMS256.txt" 2>/dev/null | grep "$NBM_PLATFORM\.tar\.xz")"
+    export shafile="$(curl -sL "https://nodejs.org/dist/$1/SHASUMS256.txt" 2>/dev/null | grep -m1 "$NBM_PLATFORM\.tar\.xz")"
     if [[ -z "$shafile" ]]; then
         nbm_error "Failed to get info for nodejs version '$1'" "1"
     fi
